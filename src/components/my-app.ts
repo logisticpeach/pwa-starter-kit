@@ -191,7 +191,7 @@ class MyApp extends connect(store)(LitElement) {
       <!-- Header -->
       <app-header condenses reveals effects="waterfall">
         <app-toolbar class="toolbar-top">
-          <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
+          <button class="menu-btn" title="Menu">${menuIcon}</button>
           <div main-title>${this.appTitle}</div>
         </app-toolbar>
 
@@ -205,8 +205,7 @@ class MyApp extends connect(store)(LitElement) {
 
       <!-- Drawer content -->
       <app-drawer
-          .opened="${this._drawerOpened}"
-          @opened-changed="${this._drawerOpenedChanged}">
+          .opened="${this._drawerOpened}">
         <nav class="drawer-list">
           <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
           <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
@@ -238,8 +237,7 @@ class MyApp extends connect(store)(LitElement) {
   firstUpdated() {
     installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
-    installMediaQueryWatcher(`(min-width: 460px)`,
-        () => store.dispatch(updateDrawerState(false)));
+    installMediaQueryWatcher(`(min-width: 460px)`, () => {});
   }
 
   updated(changedProps) {
@@ -251,14 +249,6 @@ class MyApp extends connect(store)(LitElement) {
         // This object also takes an image property, that points to an img src.
       });
     }
-  }
-
-  _menuButtonClicked() {
-    store.dispatch(updateDrawerState(true));
-  }
-
-  _drawerOpenedChanged(e) {
-    store.dispatch(updateDrawerState(e.target.opened));
   }
 
   stateChanged(state) {
