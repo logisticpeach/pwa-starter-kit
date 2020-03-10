@@ -1,5 +1,6 @@
 build/
 node_modules/
 test/integration/screenshots-current/
+src/**/*.js
 _site/
 .DS_Store
