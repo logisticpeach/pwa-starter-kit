@@ -22,8 +22,7 @@ import { store } from '../store.js';
 // These are the actions needed by this element.
 import {
   navigate,
-  updateOffline,
-  updateDrawerState
+  updateOffline
 } from '../actions/app.js';
 
 // These are the elements needed by this element.
