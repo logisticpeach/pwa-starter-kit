@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css, property } from 'lit-element';
 import { setPassiveTouchGestures } from '@polymer/polymer/lib/utils/settings.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { installMediaQueryWatcher } from 'pwa-helpers/media-query.js';
@@ -32,18 +32,13 @@ import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
 import { menuIcon } from './my-icons.js';
-import './snack-bar.js';
 
 class MyApp extends connect(store)(LitElement) {
-  static get properties() {
-    return {
-      appTitle: { type: String },
-      _page: { type: String },
-      _drawerOpened: { type: Boolean },
-      _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean }
-    };
-  }
+
+  @property({type: String}) appTitle : string;
+  @property({type: String}) _page: string;
+  @property({type: Boolean}) _drawerOpened: boolean;
+  @property({type: Boolean}) _offline: boolean;
 
   static get styles() {
     return [
@@ -231,10 +226,6 @@ class MyApp extends connect(store)(LitElement) {
       <footer>
         <p>Made with &hearts; by the Polymer team.</p>
       </footer>
-
-      <snack-bar ?active="${this._snackbarOpened}">
-        You are now ${this._offline ? 'offline' : 'online'}.
-      </snack-bar>
     `;
   }
 
@@ -274,7 +265,6 @@ class MyApp extends connect(store)(LitElement) {
   stateChanged(state) {
     this._page = state.app.page;
     this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
     this._drawerOpened = state.app.drawerOpened;
   }
 }

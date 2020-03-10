@@ -8,26 +8,13 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 */
 
-import { LitElement, html } from 'lit-element';
+import { LitElement, property } from 'lit-element';
 
-// This element is *not* connected to the Redux store.
-class ShopItem extends LitElement {
-  static get properties() {
-    return {
-      name: { type: String },
-      amount: { type: String },
-      price: { type: String }
-    };
-  }
+export class PageViewElement extends LitElement {
 
-  render() {
-    return html`
-      ${this.name}:
-      <span ?hidden="${this.amount === 0}">${this.amount} * </span>
-      $${this.price}
-      </span>
-    `;
+  @property({type: Boolean}) active: boolean = false;
+  // Only render this page if it's actually visible.
+  shouldUpdate() {
+    return this.active;
   }
 }
-
-window.customElements.define('shop-item', ShopItem);
